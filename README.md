@@ -72,6 +72,14 @@ All paths are relative to the user's Nextcloud root. `..` segments are rejected.
 | `nc_cv_render` | High-level: takes `name`, `title`, `contacts`, `links`, `body`, `right_to_left`, compiles via the bundled template, uploads PDF to `output_path`. |
 | `nc_typst_compile` | Compile arbitrary typst `source` (+ optional `extra_files` for imports), upload PDF. |
 
+### PDF utilities
+
+| Tool | Purpose |
+|---|---|
+| `nc_pdf_read_text` | Extract text per page from a PDF in Nextcloud. Returns `{path, pages: list[str]}`. Not OCR — empty for image-only PDFs. |
+| `nc_pdf_merge` | Merge `paths` (in order) into a single PDF at `output_path`. |
+| `nc_pdf_extract` | Extract specific 1-indexed `pages` from a PDF into a new PDF. Use repeatedly to split. |
+
 ## Layout
 
 ```
@@ -81,6 +89,7 @@ src/nextcloud_mcp/
   auth.py         # reads env vars, returns Config + httpx.BasicAuth
   files.py        # WebDAV tools
   cv.py           # typst render tools
+  pdf.py          # PDF read/merge/extract tools (pypdf)
   templates/
     cv.typ        # bundled CV template (2-col header, 2x2 contact, accent headings)
 ```
